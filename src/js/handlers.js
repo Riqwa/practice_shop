@@ -41,14 +41,21 @@ async function onClickProduct(e){
     if(!li) return
     const id = li.dataset.id
      await showProductId(id)
-      openModal()
+       let value = JSON.parse(localStorage.getItem("cart")) || [];
+      openModal(id, value)
+      handleCloseBtn()
+      handleAddCart(id)
 }
 
 
- function openModal() {
-
+ function openModal(id, value) {
+if(value.includes(id)){refs.btnAddCart.textContent = "Remove from Cart"}else{refs.btnAddCart.textContent = "Add to Cart"}
   refs.modal.classList.add("modal--is-open");
   document.addEventListener("keydown", onEscClose);
+}
+
+function handleCloseBtn (){
+    refs.modalClose.addEventListener('click', e => closeModal())
 }
 
 export function closeModal() {
@@ -59,6 +66,8 @@ export function closeModal() {
 function onEscClose(e) {
   if (e.key === "Escape") {
     closeModal();
+    refs.modalContent.innerHTML = ""
+    
   }
 }
 
@@ -87,3 +96,25 @@ export  function handleformBtn() {
 
     } )
 }
+
+export  function handleAddCart(id) {
+    refs.btnAddCart.replaceWith(refs.btnAddCart.cloneNode(true));
+    refs.btnAddCart = document.querySelector('.modal-product__btn--cart'); 
+    refs.btnAddCart.addEventListener('click', onClickCart)
+
+    function onClickCart(e){
+        let value = JSON.parse(localStorage.getItem("cart")) || [];
+        if (!value.includes(id)) {
+      value.push(id);
+      refs.btnAddCart.textContent = 'Remove from Cart';
+    } else {
+      value = value.filter(item => item !== id);
+      refs.btnAddCart.textContent = 'Add to Cart';
+    }
+
+    localStorage.setItem("cart", JSON.stringify(value));
+  }
+}
+
+
+

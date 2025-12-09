@@ -43,7 +43,7 @@ export  function showCategory(products) {
 export async function showProductId(id){
   const product = await getProductId(id)
   const markup = `<img class="modal-product__img" src="${product.images}" alt="#" />
-      <div class="modal-product__content">
+      <div class="modal-product__content" data-id="${product.id}">
         <p class="modal-product__title">${product.title}</p>
         <ul class="modal-product__tags">${product.tags.map(tag =>tag).join(",")}</ul>
         <p class="modal-product__description">${product.description}</p>
@@ -53,7 +53,8 @@ export async function showProductId(id){
         <button class="modal-product__buy-btn" type="button">Buy</button>
       </div>
 `
-refs.modalContent.innerHTML = markup
+
+refs.modalContent.innerHTML = markup 
 }
 
 
