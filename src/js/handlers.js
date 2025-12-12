@@ -1,7 +1,7 @@
 import {getCategory, getQueryProduct} from './products-api'
 import { showCategory, showProducts, showProductId} from './render-functions';
 import {refs} from './refs'
-
+import iziToast from 'izitoast'
 
 export  function handleCategory() {
    
@@ -45,6 +45,7 @@ async function onClickProduct(e){
       openModal(id, value)
       handleCloseBtn()
       handleAddCart(id)
+      handleAddWishlist(id)
 }
 
 
@@ -104,6 +105,7 @@ export  function handleAddCart(id) {
 
     function onClickCart(e){
         let value = JSON.parse(localStorage.getItem("cart")) || [];
+        
         if (!value.includes(id)) {
       value.push(id);
       refs.btnAddCart.textContent = 'Remove from Cart';
@@ -113,8 +115,44 @@ export  function handleAddCart(id) {
     }
 
     localStorage.setItem("cart", JSON.stringify(value));
+    refs.navCartCount.textContent = value.length
+    
   }
 }
 
 
+
+export  function handleAddWishlist(id) {
+    refs.btnWishlist.replaceWith(refs.btnWishlist.cloneNode(true));
+    refs.btnWishlist = document.querySelector('.modal-product__btn--wishlist'); 
+    refs.btnWishlist.addEventListener('click', onClickWishlist)
+
+    function onClickWishlist(e){
+        let value = JSON.parse(localStorage.getItem("Wishlist")) || [];
+        
+        if (!value.includes(id)) {
+      value.push(id);
+      refs.btnWishlist.textContent = 'Remove from Wishlist';
+    } else {
+      value = value.filter(item => item !== id);
+      refs.btnWishlist.textContent = 'Add to Wishlist';
+    }
+
+    localStorage.setItem("Wishlist", JSON.stringify(value));
+    refs.navWishlistCount.textContent = value.length
+   
+    
+    
+  }
+}
+
+export function buyCart(){
+  refs.buyBtn.addEventListener('click', e =>{
+    iziToast.success({
+      theme: 'green',
+    message: 'Successful operation!',
+});
+
+  })
+}
 

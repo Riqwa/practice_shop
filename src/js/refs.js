@@ -9,7 +9,12 @@ export const refs = {
     form: document.querySelector('.search-form'),
     formBtn: document.querySelector('.search-form__btn-clear'),
     btnAddCart: document.querySelector('.modal-product__btn--cart'),
-    btnWishlist: document.querySelector('.modal-product__btn--wishlist')
+    btnWishlist: document.querySelector('.modal-product__btn--wishlist'),
+    navCartCount: document.querySelector('[data-cart-count]'),
+    navWishlistCount: document.querySelector('[data-wishlist-count]'),
+    summaryCount: document.querySelector('[data-count]'),
+    summaryPrice: document.querySelector('[data-price]'),
+    buyBtn: document.querySelector('.cart-summary__btn'),
       
 }
 
